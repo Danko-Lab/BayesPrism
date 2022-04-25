@@ -2,4 +2,4 @@
 
 Stable release: https://github.com/Danko-Lab/TED.git . 
 
-A new version with improved memory usage and user interface will be updated soon.
+A new version with improved memory usage and user interface will be updated in ~1 week.
