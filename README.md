@@ -97,8 +97,9 @@ BayesPrism keeps both θ0, the initial estimates of cell type compositions, and 
 ----------
 
 * R vignette:
-https://github.com/Danko-Lab/BayesPrism/tutorial_deconvolution.html
-https://github.com/Danko-Lab/BayesPrism/tutorial_embedding_learning.html (to be updated soon)
+https://github.com/Danko-Lab/BayesPrism/blob/main/tutorial_deconvolution.html
+
+https://github.com/Danko-Lab/BayesPrism/blob/main/tutorial_embedding_learning.html (to be updated soon)
 
 
 * R manual:
