@@ -1,0 +1,14 @@
+Package: BayesPrism
+Version: 2.0
+Date: 2022-05-20
+Title: BayesPrism: Bayesian cell type and gene expression deconvolution 
+Author: Tinyi Chu<tc532@cornell.edu>, Charles G. Danko <dankoc@gmail.com>
+Maintainer: Tinyi Chu<tc532@cornell.edu>
+Depends: R (>= 2.6), snowfall, NMF
+Imports: gplots
+Description: Bayesian cell type and gene expression deconvolution for bulk RNA-seq and spatial transcriptomics using scRNA-seq as reference
+License: GPL-2 | GPL-3
+biocViews: Sequencing, Analysis
+LazyLoad: yes
+RoxygenNote: 6.0.1
+VignetteBuilder: knitr
