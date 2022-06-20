@@ -5,9 +5,13 @@ Bayesian cell Proportion Reconstruction Inferred using Statistical Marginalizati
 
 BayesPrism consists of the deconvolution modules and the embedding learning module. The deconvolution module models a prior from cell type-specific expression profiles from scRNA-seq to jointly estimate the posterior distribution of cell type composition and cell type-specific gene expression from bulk RNA-seq expression of tumor (or non-tumor) samples. The embedding learning module uses Expectation-maximization (EM) to approximate the tumor expression using a linear combination of malignant gene programs while conditional on the inferred expression and fraction of non-malignant cells estimated by the deconvolution module. 
 
-What's new?
-The new version v2.0 improves the memory efficiency and run-time. It also reports coefficient of variation (CV) for cell type fraction to quantify the uncertainties associated with the posterior distribution. Additionally, it contains utility functions for QC, plotting, outlier detection and extraction of results. The new version is written in S4 objects. 
-Past versions V1.x can be accessed at https://github.com/Danko-Lab/TED . 
+
+###  What's new?
+
+* The new version v2.0 improves the memory efficiency and run-time. The new version is written in S4 objects. 
+* Reports coefficient of variation (CV) for cell type fraction to quantify the uncertainties associated with the posterior distribution. 
+* Contains utility functions for QC, plotting, outlier detection and extraction of results. 
+* Past versions V1.x can be accessed at https://github.com/Danko-Lab/TED . 
 
 
 1 Cloud Computing Service:
