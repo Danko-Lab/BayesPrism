@@ -31,7 +31,7 @@ run.prism (prism,
                        
                        seed: seed number to use for repoducibility. Default = 123. Set to NULL if use pseudo-random;<br/>
                        
-                       alpha: a numeric vector to represent the parameter of dirichlet distribution. Default=1E-2. Set to max(1,user.alpha) when setting pseudo.min=0 to prevent numerical issues. }
+                       alpha: a numeric vector to represent the parameter of dirichlet distribution. Default=1. Set to max(1,user.alpha) when setting pseudo.min=0 to prevent numerical issues. }
   \item{opt.control}{A list containing parameters for the optimization step:
                      
                      maxit: maximum number of cycles to interate. Default=100000;

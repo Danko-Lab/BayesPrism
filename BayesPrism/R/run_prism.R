@@ -34,7 +34,7 @@ valid.opt.control <- function(control){
 #' function to validate gibbs.control
 #' @param control a named list of parameters required to control optimization  
 valid.gibbs.control <- function(control){
-	ctrl <- list(chain.length=1000, burn.in=500, thinning=2, n.cores=1, seed=123, alpha=1E-2)
+	ctrl <- list(chain.length=1000, burn.in=500, thinning=2, n.cores=1, seed=123, alpha=1)
 	namc <- names(control)
 	
 	if (!all(namc %in% names(ctrl)))
@@ -59,7 +59,7 @@ valid.gibbs.control <- function(control){
 #'		thinning: retain every # of MCMC samples after the burn in period to reduce auto-correlation. Default=2;
 #'		n.cores: number of cores to use. Default uses n.cores in the main argument.
 #'		seed: seed number to use for repoducibility. Default = 123. set to NULL if use pseudo random.
-#'		alpha: a numeric vector to represent the parameter of dirichlet distribution. Default=1E-2. (1E-8 may yield theta=0 due to underflow. causes issue when psuedo.min=0) 
+#'		alpha: a numeric vector to represent the parameter of dirichlet distribution. Default=1. (1E-8 may yield theta=0 due to underflow. causes issue when psuedo.min=0) 
 #' @param opt.control a list containing parameters for the optimization step:
 #'		maxit: maximum number of cycles to interate. Default=100000
 #'		sigma: hyper-parameter of the prior if optimizer="MAP". Default=2.
