@@ -91,7 +91,7 @@ We found that subsetting on signature genes sometimes moderately improves the ac
 
 NO. BayesPrism uses the raw count to generate the reference profile, and automatically normalizes each cell by its total count (MLE estimator). To avoid exact zeros in the reference profile. The package automatically adds a computed pseudo count to each cell type, such that after normalization the zero counted genes have the same value (default=10-8) across all cell types. Users may either provide a collapsed reference gene expression profile (input.type="GEP") from the scRNA-seq, or supply the raw count matrix of individual cells (input.type="count.matrix") when constructing the prism object using the new.prism function. Genes need not to be aligned between the reference matrix and the bulk matrix. new.prism will automatically collapse, align the genes on the common subset between reference and bulk, and then normalize the scRNA-seq reference. 
 
-5) How many cells do I need to represent each cell state/type? 
+6) How many cells do I need to represent each cell state/type? 
 
 Ideally users should keep the sequencing depth roughly the same across cell types, but in general, BayesPrism is robust to the variation in the sequencing depth, and maintains the relative ratio in inferred fractions even if an extremely shallowly sequenced cell type is used, such as the T cell in refGBM8. We recommend to have at least >20 cells to represent each cell state (see the tutorial_deconvolution.html for methods to perform QC).   
 
