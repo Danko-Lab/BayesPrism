@@ -35,8 +35,12 @@ newJointPost <- function(bulkID,
 	for (n in 1:N) {
 		Z[n,,] <- gibbs.list[[n]]$Z_n
 		theta[n,] <- gibbs.list[[n]]$theta_n
-		theta.cv[n,] <- gibbs.list[[n]]$theta.cv_n
 	}
+	
+	if(!is.null(gibbs.list[[1]]$theta.cv_n)){
+		for (n in 1:N) theta.cv[n,] <- gibbs.list[[n]]$theta.cv_n
+	}
+	else theta.cv <- matrix()
 	
 	constant <- sum(unlist(lapply(gibbs.list, '[[', "gibbs.constant")))
 	 
