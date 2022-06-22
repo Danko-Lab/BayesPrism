@@ -28,6 +28,7 @@ assign.category <- function(input.genes,
 	else{
 		#use gene symbols
 		cat("Gene symbols detected. Recommend to use EMSEMBLE IDs for more unique mapping.\n")
+		input.genes.short <- input.genes
 		gene.df <- gene.list[,c(1,3)]
 	}
 		
