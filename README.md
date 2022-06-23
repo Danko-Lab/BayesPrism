@@ -108,6 +108,3 @@ BayesPrism keeps both θ0, the initial estimates of cell type compositions, and 
 
 * https://github.com/Danko-Lab/BayesPrism/blob/main/tutorial_embedding_learning.html 
 
-
-* R manual:
- (Coming soon)
