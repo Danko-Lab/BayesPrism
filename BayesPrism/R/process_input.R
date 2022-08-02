@@ -81,7 +81,7 @@ cleanup.genes <- function (input,
 	stopifnot(all(gene.group %in% c("other_Rb","chrM","chrX","chrY","Rb",
 									"Mrp","act","hb","MALAT1")))
 	
-	if(! input.type %in% c("scRNA","count.matrix")) stop("Error: please specify the correct input.type!")
+	if(! input.type %in% c("GEP","count.matrix")) stop("Error: please specify the correct input.type!")
 	if(input.type=="GEP"){
 		exp.cells <- min(exp.cells,1)
 		print("As the input is a collpased GEP, exp.cells is set to min(exp.cells,1)")
