@@ -207,8 +207,8 @@ new.prism <- function(reference,
 	
 	#contruct a prism object
 	new("prism", 
-		phi_cellState = new("refPhi", phi = ref.cs, pseudo.min = min(ref.cs)),
-		phi_cellType = new("refPhi", phi = ref.ct, pseudo.min = min(ref.ct)),
+		phi_cellState = new("refPhi", phi = ref.cs, pseudo.min = pseudo.min),
+		phi_cellType = new("refPhi", phi = ref.ct, pseudo.min = pseudo.min),
 		map = map,
 		key = key,
 		mixture = mixture)
