@@ -23,7 +23,6 @@ Please click the link to try this site:
 
 https://www.bayesprism.org/
 
-or https://dreg.dnasequence.org/
 
 2 Cite BayesPrism:
 -----------
