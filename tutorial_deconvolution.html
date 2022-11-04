@@ -752,7 +752,7 @@ fraction and expression from the output of <code>run.prism</code>.</p>
 <li>theta.cv quantifies how concentrated the posterior distribution is.
 Higher theta value is associated with lower CV. When performing
 rank-ordered statistics, such as Spearman’s rank correlation, users may
-mask (fix at zero) theta where the CV is below some number, say &lt;
+mask theta (e.g. clip at zero for small theta) where the CV is above some number, say &gt;
 0.1. Lower sequencing depth, which is the case for spatial
 transcriptomics, is generally associated with higher CV. A reasonable
 cutoff of CV for deconvolving Visium data may be ~0.5.</li>
