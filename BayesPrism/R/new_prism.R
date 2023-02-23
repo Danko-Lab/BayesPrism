@@ -197,7 +197,7 @@ new.prism <- function(reference,
 	mixture <- mixture[, gene.shared, drop=F]
 	
 	#normalize
-	cat("Nornalizing reference... \n")
+	cat("Normalizing reference... \n")
 	ref.cs <- norm.to.one (ref = ref.cs, pseudo.min = pseudo.min)
 	ref.ct <- norm.to.one (ref = ref.ct, pseudo.min = pseudo.min)
 	
