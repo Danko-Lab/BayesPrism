@@ -80,7 +80,7 @@ The number of patients needed for the reference mostly depends on the degree of 
 
 Users should be cautious when normal tissues of highly similar transcription profiles to the tumor cells are included in the reference, especially those represent the tumor cell origins. For example the inclusion of normal astrocyte to deconvolve GBM may cause the astrocytes to be overestimated and the malignant cells to be underestimated. Such an issue resulting from highly similar transcription profiles will mainly affect the inference of malignant cells, but not non-malignant cells (such as the inference of multiple subtypes of T cell), due to the under-representativeness of malignant cells in the reference caused by tumor heterogeneity. Note that this issue is not specific to BayesPrism. In fact, any regression approaches will suffer when one reference component does not sufficiently represent that in the mixture while additional components of similar expression profiles are also included in the reference. Nevertheless, most non-malignant cells, such as immune, endothelial, fibroblast and even oligodendrocytes in GBM do not show this issue across the three tumor types we tested. This issue can also be avoided by domain knowledge or running the leave-one-out test. Users can also subset the scRNA-seq reference on signature genes to ameliorate this issue.
 
-4) How to clean up the scRNA-seq reference and bulk mixture? Are marker genes (signature genes) required?
+5) How to clean up the scRNA-seq reference and bulk mixture? Are marker genes (signature genes) required?
 
 Different RNA-seq platforms may contain systematic batch effects that cannot be corrected by BayesPrism. Loosely speaking, BayesPrism can correct batch effects for genes where the relative expression among cell types holds across platforms. Therefore, genes that are highly expressed in the mixture but are not detectable in the reference profile should be excluded. The new.prism function removes any genes in the mixture greater than 1% in more than 10% of the mixture samples by default. This threshold is very lenient, and usually not does not filter out a large number of genes.
 
@@ -88,11 +88,11 @@ We also highly recommend the exclusion of ribosomal and mitochondrial genes and 
 
 We found that subsetting on signature genes sometimes moderately improves the accuracy in inferring cell types when 1) batch effects are severe and 2) the scRNA-se reference contains cell types highly similar in transcription, i.e. only a small number of differentially expressed genes. For users' convenience, we implemented the function get.exp.stat/select.marker that performs differential expression test between cell states from different cell types (using the t-test provided by the findMarkers function from the scran package). Users should note that BayesPrism infers the fraction of reads over the given gene set. So when only signature genes are used, the fraction is interpreted as the fraction of reads of cell type X over those signature genes. 
 
-5) Do I need to normalize the data or align them? 
+6) Do I need to normalize the data or align them? 
 
 NO. BayesPrism uses the raw count to generate the reference profile, and automatically normalizes each cell by its total count (MLE estimator). To avoid exact zeros in the reference profile. The package automatically adds a computed pseudo count to each cell type, such that after normalization the zero counted genes have the same value (default=10-8) across all cell types. Users may either provide a collapsed reference gene expression profile (input.type="GEP") from the scRNA-seq, or supply the raw count matrix of individual cells (input.type="count.matrix") when constructing the prism object using the new.prism function. Genes need not to be aligned between the reference matrix and the bulk matrix. new.prism will automatically collapse, align the genes on the common subset between reference and bulk, and then normalize the scRNA-seq reference. 
 
-6) How many cells do I need to represent each cell state/type? 
+7) How many cells do I need to represent each cell state/type? 
 
 Ideally users should keep the sequencing depth roughly the same across cell types, but in general, BayesPrism is robust to the variation in the sequencing depth, and maintains the relative ratio in inferred fractions even if an extremely shallowly sequenced cell type is used, such as the T cell in refGBM8. We recommend to have at least >20 cells to represent each cell state (see the tutorial_deconvolution.html for methods to perform QC).   
 
