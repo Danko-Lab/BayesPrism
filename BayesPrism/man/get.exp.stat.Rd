@@ -11,7 +11,7 @@ for cell states within each cell type.  Used if needs to run BayesPrism over mar
 get.exp.stat <- function(sc.dat,
 						 cell.type.labels,
 						 cell.state.labels,
-						 psuedo.count=0.1,
+						 pseudo.count=0.1,
 						 cell.count.cutoff=50,
 						 n.cores=1)
 }
@@ -19,7 +19,7 @@ get.exp.stat <- function(sc.dat,
   \item{sc.dat}{A cell-by-gene count matrix. rownames are cell state/type names; colnames are gene IDs/names.}
   \item{cell.type.labels}{A character vector to denote cell types of each cell}
   \item{cell.state.labels}{A character vector to denote cell state of each cell}
-  \item{psuedo.count}{A numeric value used for log2 transformation. =0.1 for 10x data, =10 for smart-seq. Default=0.1.}
+  \item{pseudo.count}{A numeric value used for log2 transformation. =0.1 for 10x data, =10 for smart-seq. Default=0.1.}
   \item{cell.count.cutoff}{A numeric value to exclude cell state with number of cells fewer than this value for t test. Default=50}
   \item{n.cores}{Number of threads to be used for the pairwiseTTests function. Default=1}
 }
