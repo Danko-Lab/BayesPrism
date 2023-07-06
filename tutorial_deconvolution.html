@@ -453,7 +453,7 @@ outputted by the function if needed.</p>
 <p><code>sc.stat</code> shows the log of normalized mean expression
 (x-axis) and the maximum specificity (y-axis) of each gene, and if each
 gene belongs to a potential outlier category. <code>other_Rb</code> are
-a group of curated genes mostly consists of ribosomal psuedo-genes.</p>
+a group of curated genes mostly consists of ribosomal pseudo-genes.</p>
 <ul>
 <li>Similarly, we may also visualize outlier genes from bulk RNA-seq. We
 compute the mean expression and of each gene across all cell types. As
@@ -550,7 +550,7 @@ cell types. Other differential expression analysis can also be used.</p>
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>diff.exp.stat <span class="ot">&lt;-</span> <span class="fu">get.exp.stat</span>(<span class="at">sc.dat=</span>sc.dat[,<span class="fu">colSums</span>(sc.dat<span class="sc">&gt;</span><span class="dv">0</span>)<span class="sc">&gt;</span><span class="dv">3</span>],<span class="co"># filter genes to reduce memory use</span></span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">cell.type.labels=</span>cell.type.labels,</span>
 <span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">cell.state.labels=</span>cell.state.labels,</span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">psuedo.count=</span><span class="fl">0.1</span>, <span class="co">#a numeric value used for log2 transformation. =0.1 for 10x data, =10 for smart-seq. Default=0.1.</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">pseudo.count=</span><span class="fl">0.1</span>, <span class="co">#a numeric value used for log2 transformation. =0.1 for 10x data, =10 for smart-seq. Default=0.1.</span></span>
 <span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">cell.count.cutoff=</span><span class="dv">50</span>, <span class="co"># a numeric value to exclude cell state with number of cells fewer than this value for t test. Default=50.</span></span>
 <span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>                                          <span class="at">n.cores=</span><span class="dv">1</span> <span class="co">#number of threads</span></span>
 <span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>                                          )</span>
