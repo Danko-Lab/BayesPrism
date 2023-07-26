@@ -7,7 +7,7 @@
 #' 		 Or a K*G profile matrix (count scale). rownames are cell state/type names; colnames are gene IDs/names.
 #' @param cell.type.labels a character vector to denote cell types of each cell (if input is a count.matrix) 
 #'		or each row of GEP (if input is a "GEP")
-#' @param species a character variable to denote if genes are human ("mm") or mouse ("hs")
+#' @param species a character variable to denote if genes are human ("hs") or mouse ("mm")
 
 #' @param pdf.prefix a character variable for the prefix of the pdf name. Default=NULL (plot directly).
 #' @return a logical matrix of dimension #of genes * # of categories from the watchlist 
