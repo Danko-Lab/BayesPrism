@@ -246,7 +246,7 @@ RNA-seq expression. <code>rownames</code> are bulk sample IDs, while
 <ul>
 <li><code>sc.dat</code>: The cell-by-gene raw count matrix of bulk
 RNA-seq expression. <code>rownames</code> are bulk cell IDs, while
-<code>colnames</code> are gene names/IDs.</li>
+<code>colnames</code> are gene names/IDs. <code>sc.dat</code> should be a dense matrix. If your <code>sc.dat</code> is a sparse matrix (<code>dgCMatrix</code>), you should convert it to a dense matrix, i.e., <code>sc.dat <- as.matrix(sc.dat)</code></li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(sc.dat)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] 23793 60294</span></span></code></pre></div>
