@@ -7,7 +7,7 @@ BayesPrism consists of the deconvolution modules and the embedding learning modu
 
 
 ###  What's new?
-
+* The new version v2.1 improves the memory usage in snowfall by allocating only the necessary data to each node. 
 * The new version v2.0 improves the memory efficiency and run-time. The new version is written in S4 objects. 
 * Reports coefficient of variation (CV) for cell type fraction to quantify the uncertainties associated with the posterior distribution. 
 * Contains utility functions for QC, plotting, outlier detection and extraction of results. 

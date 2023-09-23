@@ -229,15 +229,14 @@ estimate.gibbs.time <- function(gibbsSampler.obj,
 
 
 
-#' function to run Gibbs sampling if reference is of the class refPhi
+#' function to run initial Gibbs sampling if reference is of the class refPhi
 #'
 #' @param gibbsSampler.obj, a gibbsSampler object
-#' @param final a logical variable denote whether report only updated theta_f (final=TRUE)
 #' @import snowfall
-#' @return a jointPost object with Z and theta entries (if final=FALSE) or a theta_f matrix (if final=TRUE) 
-run.gibbs.refPhi <- function(gibbsSampler.obj,
-							 final,
-							 compute.elbo){
+#' @return a jointPost object with Z and theta entries 
+run.gibbs.refPhi.ini <- function(gibbsSampler.obj,
+							 	   compute.elbo,
+							 	   writeToDisk){
 	
 	phi <- gibbsSampler.obj@reference@phi
 	X <- gibbsSampler.obj@X
@@ -247,77 +246,113 @@ run.gibbs.refPhi <- function(gibbsSampler.obj,
 	gibbs.idx <- get.gibbs.idx(gibbs.control)
 	seed <- gibbs.control$seed
 
+	sample.Z.theta_n <- BayesPrism:::sample.Z.theta_n
+		
 	cat("Start run... \n")
-	
 	
 	if(gibbs.control$n.cores>1){	
 		#parallel using snowfall	
 		sfInit(parallel = TRUE, cpus = gibbs.control$n.cores, type = "SOCK" )
-		sfExport("phi", "X", "alpha", "gibbs.idx", "seed", "compute.elbo")
-
-		if(!final){
-			cpu.fun <- function(n) {
-				if(!is.null(seed)) set.seed(seed)
-				require("BayesPrism")
-				sample.Z.theta_n (X_n = X[n,], phi = phi, alpha = alpha, gibbs.idx = gibbs.idx, compute.elbo = compute.elbo)
-			}
-			environment(cpu.fun) <- globalenv()
-			gibbs.list <- sfLapply( 1:nrow(X), cpu.fun)
-			sfStop()
-		
-			jointPost <- newJointPost(bulkID = rownames(X),
-							   	   	  geneID = colnames(X), 
-							   	   	  cellType = rownames(phi),
-							   	   	  gibbs.list = gibbs.list )
-			return(jointPost)
+					
+		cpu.fun <- function(n) {
+			if(!is.null(seed)) set.seed(seed)
+			#load nth mixture from disk
+			file.name.X_n <- paste(tmp.dir, "/mixture_",n,".rdata",sep="")
+			load(file.name.X_n)
+			
+			sample.Z.theta_n (X_n = X_n, 
+							  phi = phi, 
+							  alpha = alpha, 
+							  gibbs.idx = gibbs.idx, 
+							  compute.elbo = compute.elbo)		
 		}
-		else{
-			cpu.fun <- function(n) {
-				if(!is.null(seed)) set.seed(seed)
-				require("BayesPrism")
-				sample.theta_n (X_n = X[n,], phi = phi, alpha = alpha, gibbs.idx = gibbs.idx)
-			}
-			environment(cpu.fun) <- globalenv()
-			gibbs.list <- sfLapply( 1:nrow(X), cpu.fun)
-			sfStop()
-		
-			thetaPost <- newThetaPost (bulkID = rownames(X),
-						 			   cellType = rownames(phi),
-						 			   gibbs.list = gibbs.list)
-			return(thetaPost)
-		}
+		tmp.dir <- tempdir()
+		sfExport("phi", "alpha", "gibbs.idx", "seed", 
+				 	"compute.elbo", "sample.Z.theta_n","tmp.dir")
+		environment(cpu.fun) <- globalenv()
+		gibbs.list <- sfLapply( 1:nrow(X), cpu.fun)
+		sfStop()
 	}
 	else{
 		#single thread
-		if(!final){
-			cpu.fun <- function(n) {
+		cpu.fun <- function(n) {
 				if(!is.null(seed)) set.seed(seed)
 				cat(n," ")
-				sample.Z.theta_n (X_n = X[n,], phi = phi, alpha = alpha, gibbs.idx = gibbs.idx, compute.elbo = compute.elbo)
-			}
-			gibbs.list <- lapply( 1:nrow(X), cpu.fun)
-			cat("\n")
-			jointPost <- newJointPost( bulkID = rownames(X),
-							   	   geneID = colnames(X), 
-							   	   cellType = rownames(phi),
-							   	   gibbs.list = gibbs.list )
-			return(jointPost)
+				sample.Z.theta_n (X_n = X[n,], phi = phi, alpha = alpha, 
+								  gibbs.idx = gibbs.idx, compute.elbo = compute.elbo)
 		}
-		else{
-			cpu.fun <- function(n) {
-				if(!is.null(seed)) set.seed(seed)
-				cat(n," ")
-				sample.theta_n (X_n = X[n,], phi = phi, alpha = alpha, gibbs.idx = gibbs.idx)
-			}
-			gibbs.list <- lapply( 1:nrow(X), cpu.fun)
-			cat("\n")
-			thetaPost <- newThetaPost (bulkID = rownames(X),
+		gibbs.list <- lapply( 1:nrow(X), cpu.fun)
+		cat("\n")
+	}
+	
+	jointPost <- newJointPost(bulkID = rownames(X),
+							  geneID = colnames(X), 
+							  cellType = rownames(phi),
+							  gibbs.list = gibbs.list )
+	return(jointPost)
+}
+
+
+
+
+
+
+#' function to run final sampling if reference is of the class refPhi
+#'
+#' @param gibbsSampler.obj, a gibbsSampler object
+#' @import snowfall
+#' @return a theta_f matrix 
+run.gibbs.refPhi.final <- function(gibbsSampler.obj,
+							 	   compute.elbo){
+	
+	phi <- gibbsSampler.obj@reference@phi
+	X <- gibbsSampler.obj@X
+	gibbs.control <- gibbsSampler.obj@gibbs.control
+	alpha <- gibbs.control$alpha
+	
+	gibbs.idx <- get.gibbs.idx(gibbs.control)
+	seed <- gibbs.control$seed
+
+	sample.theta_n <- BayesPrism:::sample.theta_n
+		
+	cat("Start run... \n")
+	
+	if(gibbs.control$n.cores>1){	
+		#parallel using snowfall	
+		sfInit(parallel = TRUE, cpus = gibbs.control$n.cores, type = "SOCK" )
+		
+		cpu.fun <- function(n) {
+			if(!is.null(seed)) set.seed(seed)
+			#load nth mixture from disk
+			file.name.X_n <- paste(tmp.dir, "/mixture_",n,".rdata",sep="")
+			load(file.name.X_n)
+			
+			sample.theta_n (X_n = X_n, 
+								phi = phi, 
+								alpha = alpha, 
+								gibbs.idx = gibbs.idx)		
+		}
+		tmp.dir <- tempdir()
+		sfExport("phi", "alpha", "gibbs.idx", "seed", 
+				 "compute.elbo", "sample.theta_n", "tmp.dir")
+		environment(cpu.fun) <- globalenv()
+		gibbs.list <- sfLapply( 1:nrow(X), cpu.fun)
+		sfStop() 
+	}
+	else{
+		#single thread
+		cpu.fun <- function(n) {
+			if(!is.null(seed)) set.seed(seed)
+			cat(n," ")
+			sample.theta_n (X_n = X[n,], phi = phi, alpha = alpha, gibbs.idx = gibbs.idx)
+		}
+		gibbs.list <- lapply( 1:nrow(X), cpu.fun)
+		cat("\n")
+	}
+	thetaPost <- newThetaPost (bulkID = rownames(X),
 						 			   cellType = rownames(phi),
 						 			   gibbs.list = gibbs.list)
-
-			return(thetaPost)
-		}
-	}
+	return(thetaPost)
 }
 
 
@@ -339,20 +374,36 @@ run.gibbs.refTumor <- function(gibbsSampler.obj){
 	gibbs.idx <- get.gibbs.idx(gibbs.control)
 	seed <- gibbs.control$seed
 	
-	cat("Start run... \n")
+	sample.theta_n <- BayesPrism:::sample.theta_n
+	
 
+	tmp.dir <- tempdir()
+	for(n in 1:nrow(psi_mal)) {
+		psi_mal_n <- psi_mal[n,]
+		file.name <- paste(tmp.dir, "/psi_mal_",n,".rdata",sep="")
+		save(psi_mal_n, file= file.name)
+	}
+	
+	cat("Start run... \n")
+	
 	cpu.fun <- function(n) {
 		if(!is.null(seed)) set.seed(seed)
-		require("BayesPrism")
-		sample.theta_n (X_n = X[n,], 
-						phi = rbind(psi_mal[n,], psi_env), 
+			
+		#load reference of malignant cells and nth mixture from disk
+		file.name.psi_mal_n <- paste(tmp.dir, "/psi_mal_",n,".rdata",sep="")
+		load(file.name.psi_mal_n)
+		file.name.X_n <- paste(tmp.dir, "/mixture_",n,".rdata",sep="")
+		load(file.name.X_n)
+			
+		sample.theta_n (X_n = X_n, 
+						phi = rbind(psi_mal_n, psi_env), 
 						alpha = alpha,
 						gibbs.idx = gibbs.idx)				    				
 	}
-	
 	sfInit(parallel = TRUE, cpus = gibbs.control$n.cores, type = "SOCK" )
-	sfExport("psi_mal", "psi_env", "X", "alpha", "gibbs.idx", "seed")
-
+	tmp.dir <- tempdir()
+	sfExport("psi_env", "X", "alpha", "gibbs.idx", "seed", "sample.theta_n", "tmp.dir")
+	
 	environment(cpu.fun) <- globalenv()
 	gibbs.list <- sfLapply( 1:nrow(X), cpu.fun)
 	sfStop()
@@ -360,7 +411,8 @@ run.gibbs.refTumor <- function(gibbsSampler.obj){
 	thetaPost <- newThetaPost (bulkID = rownames(X),
 						 	   cellType = c(key, rownames(psi_env)),
 						 	   gibbs.list = gibbs.list)
-
+	
+	unlink(tmp.dir, recursive = TRUE)
 	return(thetaPost)
 }
 
@@ -376,7 +428,8 @@ run.gibbs.refTumor <- function(gibbsSampler.obj){
 run.gibbs <- function(gibbsSampler.obj, 
 					  final,
 					  if.estimate=TRUE,
-					  compute.elbo=FALSE){
+					  compute.elbo=FALSE
+					  ){
 	
 	if(final) cat("Run Gibbs sampling using updated reference ... \n")
 	else cat("Run Gibbs sampling... \n")
@@ -386,7 +439,10 @@ run.gibbs <- function(gibbsSampler.obj,
 							final = final)
 	
 	if(is(gibbsSampler.obj@reference,"refPhi")) {
-		return(run.gibbs.refPhi(gibbsSampler.obj = gibbsSampler.obj, final = final, compute.elbo = compute.elbo))
+		if(!final) return(run.gibbs.refPhi.ini(gibbsSampler.obj = gibbsSampler.obj, 
+											   compute.elbo = compute.elbo))
+		else return(run.gibbs.refPhi.final(gibbsSampler.obj = gibbsSampler.obj, 
+										   compute.elbo = compute.elbo))
 	}
 	if(is(gibbsSampler.obj@reference,"refTumor")) {
 		return(run.gibbs.refTumor(gibbsSampler.obj = gibbsSampler.obj))	

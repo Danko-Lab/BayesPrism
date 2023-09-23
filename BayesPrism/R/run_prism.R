@@ -72,7 +72,8 @@ run.prism <- function(prism,
 					  n.cores=1,
 					  update.gibbs=TRUE,
 					  gibbs.control=list(),
-					  opt.control=list()){
+					  opt.control=list()
+					  ){
 	
 	if(! "n.cores" %in% names(gibbs.control)) gibbs.control$n.cores <- n.cores
 	if(! "n.cores" %in% names(opt.control)) opt.control$n.cores <- n.cores
@@ -84,16 +85,24 @@ run.prism <- function(prism,
 	
 	if(prism@phi_cellState@pseudo.min==0) 
 		gibbs.control$alpha <- max(1, gibbs.control$alpha)
-		
+	
+	#write mixture to disk and load each X_n to the corresponding node to save memory
+	tmp.dir <- tempdir()
+	for(n in 1:nrow(prism@mixture)) {
+		X_n <- prism@mixture[n,]
+		file.name <- paste(tmp.dir, "/mixture_",n,".rdata",sep="")
+		save(X_n, file= file.name)
+	}
+			
 	#sampling cell states (cs)
 	gibbsSampler.ini.cs <- new("gibbsSampler",
 								reference = prism@phi_cellState,
 								X = prism@mixture,
 								gibbs.control = gibbs.control)
 
-	jointPost.ini.cs <- run.gibbs(gibbsSampler.ini.cs, final=FALSE)
+	jointPost.ini.cs <- run.gibbs(gibbsSampler.ini.cs, 
+								  final=FALSE)
 
-	
 	#merge over cell states to get cell type (ct) info
 	jointPost.ini.ct <- mergeK(jointPost.obj = jointPost.ini.cs, 
 					   		   			 map = prism@map)
@@ -120,7 +129,8 @@ run.prism <- function(prism,
 									X = prism@mixture,
 									gibbs.control = gibbs.control)
 		
-		theta_f <- run.gibbs(gibbsSampler.update, final=TRUE)
+		theta_f <- run.gibbs(gibbsSampler.update, 
+							 final=TRUE)
 		
 		bp.obj <- new("BayesPrism",
 		 				prism = prism,
@@ -133,6 +143,8 @@ run.prism <- function(prism,
          									 update.gibbs = update.gibbs)
          			 )
 	}
+	
+	unlink(tmp.dir, recursive = TRUE)
 	
 	return(bp.obj) 		
 }

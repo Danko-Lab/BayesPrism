@@ -62,7 +62,6 @@ optimize.psi<-function(phi,
 	Z_t <- colSums(Z_gt)
 				  			
 	cpu.fun <- function(t) {
-		require(BayesPrism)
 		Rcgminu(par= rep(0,ncol(phi)),
 	  			fn= log.posterior.gamma,
 	  			gr= log.posterior.gamma.grad,
@@ -76,7 +75,11 @@ optimize.psi<-function(phi,
 	
 	sfInit(parallel = TRUE, cpus = opt.control$n.cores, type = "SOCK" )
 	opt.control$n.cores <- NULL
-	sfExport("phi", "Z_gt", "Z_t", "prior.num", "opt.control")
+	Rcgminu <- BayesPrism::: Rcgminu
+	log.posterior.gamma.grad <- BayesPrism::: log.posterior.gamma.grad
+	log.posterior.gamma <- BayesPrism::: log.posterior.gamma
+	sfExport("phi", "Z_gt", "Z_t", "prior.num", "opt.control", 
+			 "Rcgminu", "log.posterior.gamma.grad", "log.posterior.gamma")
 
 	environment(cpu.fun) <- globalenv()
 	opt.res <- sfLapply( 1:nrow(phi), cpu.fun)
