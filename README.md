@@ -32,7 +32,7 @@ https://www.bayesprism.org/
 
 Cell type and gene expression deconvolution with BayesPrism enables Bayesian integrative analysis across bulk and single-cell RNA sequencing in oncology
 
-Tinyi Chu, Zhong Wang, Dana Pe’er & Charles G. Danko 
+Chu, T. et al. & Danko, C.G.
 
 https://www.nature.com/articles/s43018-022-00356-3
 
