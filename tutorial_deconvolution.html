@@ -244,8 +244,8 @@ RNA-seq expression. <code>rownames</code> are bulk sample IDs, while
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">colnames</span>(bk.dat))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] &quot;ENSG00000000003.13&quot; &quot;ENSG00000000005.5&quot;  &quot;ENSG00000000419.11&quot; &quot;ENSG00000000457.12&quot; &quot;ENSG00000000460.15&quot; &quot;ENSG00000000938.11&quot;</span></span></code></pre></div>
 <ul>
-<li><code>sc.dat</code>: The cell-by-gene raw count matrix of bulk
-RNA-seq expression. <code>rownames</code> are bulk cell IDs, while
+<li><code>sc.dat</code>: The cell-by-gene raw count matrix of single cell
+RNA-seq expression. <code>rownames</code> are cell IDs, while
 <code>colnames</code> are gene names/IDs. <code>sc.dat</code> should be a dense matrix. If your <code>sc.dat</code> is a sparse matrix (<code>dgCMatrix</code>), you should convert it to a dense matrix, i.e., <code>sc.dat <- as.matrix(sc.dat)</code></li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(sc.dat)</span>
