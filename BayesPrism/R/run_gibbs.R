@@ -235,8 +235,7 @@ estimate.gibbs.time <- function(gibbsSampler.obj,
 #' @import snowfall
 #' @return a jointPost object with Z and theta entries 
 run.gibbs.refPhi.ini <- function(gibbsSampler.obj,
-							 	   compute.elbo,
-							 	   writeToDisk){
+							 	   compute.elbo){
 	
 	phi <- gibbsSampler.obj@reference@phi
 	X <- gibbsSampler.obj@X
@@ -266,7 +265,7 @@ run.gibbs.refPhi.ini <- function(gibbsSampler.obj,
 							  gibbs.idx = gibbs.idx, 
 							  compute.elbo = compute.elbo)		
 		}
-		tmp.dir <- tempdir()
+		tmp.dir <- tempdir(check=TRUE)
 		sfExport("phi", "alpha", "gibbs.idx", "seed", 
 				 	"compute.elbo", "sample.Z.theta_n","tmp.dir")
 		environment(cpu.fun) <- globalenv()

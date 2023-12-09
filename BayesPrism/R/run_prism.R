@@ -87,7 +87,7 @@ run.prism <- function(prism,
 		gibbs.control$alpha <- max(1, gibbs.control$alpha)
 	
 	#write mixture to disk and load each X_n to the corresponding node to save memory
-	tmp.dir <- tempdir()
+	tmp.dir <- tempdir(check=TRUE)
 	for(n in 1:nrow(prism@mixture)) {
 		X_n <- prism@mixture[n,]
 		file.name <- paste(tmp.dir, "/mixture_",n,".rdata",sep="")
