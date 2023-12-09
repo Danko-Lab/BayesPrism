@@ -331,7 +331,7 @@ run.gibbs.refPhi.final <- function(gibbsSampler.obj,
 								alpha = alpha, 
 								gibbs.idx = gibbs.idx)		
 		}
-		tmp.dir <- tempdir()
+		tmp.dir <- tempdir(check=TRUE)
 		sfExport("phi", "alpha", "gibbs.idx", "seed", 
 				 "compute.elbo", "sample.theta_n", "tmp.dir")
 		environment(cpu.fun) <- globalenv()
@@ -376,7 +376,7 @@ run.gibbs.refTumor <- function(gibbsSampler.obj){
 	sample.theta_n <- BayesPrism:::sample.theta_n
 	
 
-	tmp.dir <- tempdir()
+	tmp.dir <- tempdir(check=TRUE)
 	for(n in 1:nrow(psi_mal)) {
 		psi_mal_n <- psi_mal[n,]
 		file.name <- paste(tmp.dir, "/psi_mal_",n,".rdata",sep="")
@@ -400,7 +400,7 @@ run.gibbs.refTumor <- function(gibbsSampler.obj){
 						gibbs.idx = gibbs.idx)				    				
 	}
 	sfInit(parallel = TRUE, cpus = gibbs.control$n.cores, type = "SOCK" )
-	tmp.dir <- tempdir()
+	tmp.dir <- tempdir(check=TRUE)
 	sfExport("psi_env", "X", "alpha", "gibbs.idx", "seed", "sample.theta_n", "tmp.dir")
 	
 	environment(cpu.fun) <- globalenv()
