@@ -199,8 +199,10 @@ estimate.gibbs.time <- function(gibbsSampler.obj,
 				    			)
 		}
 		if(is(ref,"refTumor")){
-		 	sample.theta_n (X_n = X[1,], 
-							phi = rbind(ref@psi_mal[1,], ref@psi_env), 
+		 	phi_1 <- rbind(ref@psi_mal[1,], ref@psi_env)
+			nonzero.idx <- apply(phi_1,2,max)>0
+		 	sample.theta_n (X_n = X[1,nonzero.idx, drop=F], 
+							phi = phi_1[, nonzero.idx, drop=F], 
 							alpha = gibbs.control$alpha,
 							gibbs.idx = get.gibbs.idx(
 				     			list(chain.length = chain.length, 
@@ -394,10 +396,13 @@ run.gibbs.refTumor <- function(gibbsSampler.obj){
 		file.name.X_n <- paste(tmp.dir, "/mixture_",n,".rdata",sep="")
 		load(file.name.X_n)
 			
-		sample.theta_n (X_n = X_n, 
-						phi = rbind(psi_mal_n, psi_env), 
+		phi_n <- rbind(psi_mal_n, psi_env)
+		#filter all zero genes
+		nonzero.idx <- apply(phi_n,2,max)>0
+		sample.theta_n (X_n = X_n[, nonzero.idx, drop=F], 
+						phi = phi_n[, nonzero.idx, drop=F], 
 						alpha = alpha,
-						gibbs.idx = gibbs.idx)				    				
+						gibbs.idx = gibbs.idx)					    				
 	}
 	sfInit(parallel = TRUE, cpus = gibbs.control$n.cores, type = "SOCK" )
 	tmp.dir <- tempdir(check=TRUE)
