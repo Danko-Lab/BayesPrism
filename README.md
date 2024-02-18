@@ -54,7 +54,7 @@ https://www.nature.com/articles/s43018-022-00356-3
 
 * R packages:
 	
-	snowfall, NMF, gplots, scran, BiocParallel
+	snowfall, NMF, gplots, scran, BiocParallel, Matrix
 
 * If all dependent packages and commands have been installed, please use the following codes to install/update the package in R terminal. 
 
