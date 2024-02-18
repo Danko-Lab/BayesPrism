@@ -65,15 +65,17 @@ validate.input <- function(input){
 			warning("Warning: input seems to be log-transformed. Please double check your input. Log transformation should be avoided")
 	}
 	
-	filter.idx <- colSums( input < 0 | !is.finite(input)) > 0
-	if(sum(filter.idx)>0)
-		stop(" Error: input contains negative, non-finite or non-numeric values. 
-			   Please double check your input is unnormalized and untransformed raw count. \n")
+	if(min(input)<0)
+		stop(" Error: input contains negative values. 
+			   Please make sure your input is untransformed raw count. \n")
+	
+	if (any(!is.finite(input)) | any(is.na(input)) )
+		stop(" Error: input contains NaN or NA values.\n")
 	
 	if(is.null(colnames(input)))
 		stop("Error: please specify the colnames of mixture / reference using gene identifiers!")
 	
-	if(!is.matrix(input))
+	if(!(is.matrix(input) | inherits(input, "dgCMatrix")))
 		stop("Error: the type of mixture and reference need to be matrix!")
 	
 	NULL
