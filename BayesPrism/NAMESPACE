@@ -5,6 +5,7 @@ import(scran)
 import(stats)
 import(utils)
 import(NMF)
+import(Matrix)
 
 export(rdirichlet)
 export(sample.Z.theta_n, sample.theta_n, sample.n)
