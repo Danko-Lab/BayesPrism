@@ -399,7 +399,7 @@ run.gibbs.refTumor <- function(gibbsSampler.obj){
 		phi_n <- rbind(psi_mal_n, psi_env)
 		#filter all zero genes
 		nonzero.idx <- apply(phi_n,2,max)>0
-		sample.theta_n (X_n = X_n[, nonzero.idx, drop=F], 
+		sample.theta_n (X_n = X_n[nonzero.idx], 
 						phi = phi_n[, nonzero.idx, drop=F], 
 						alpha = alpha,
 						gibbs.idx = gibbs.idx)					    				
