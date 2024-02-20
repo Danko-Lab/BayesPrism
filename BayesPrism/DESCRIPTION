@@ -1,6 +1,6 @@
 Package: BayesPrism
-Version: 2.2.1
-Date: 2024-02-18
+Version: 2.2.2
+Date: 2024-02-20
 Title: BayesPrism: Bayesian cell type and gene expression deconvolution 
 Author: Tinyi Chu<tc532@cornell.edu>, Charles G. Danko <dankoc@gmail.com>
 Maintainer: Tinyi Chu<tc532@cornell.edu>
