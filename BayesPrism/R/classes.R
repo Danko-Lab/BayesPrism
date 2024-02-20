@@ -132,11 +132,6 @@ setClass("prism",
   				msg <- paste("invalid key")
   				errors <- c(errors, msg)
   			}
-  			
-  			if(!is.na(mykey) & min(object@phi_cellState@pseudo.min, object@phi_cellType@pseudo.min)==0){
-  				msg <- paste("psuedo.min needs to be strictly positive when running under tumor mode.")
-  				errors <- c(errors, msg)
-  			}	
   			  					
   			cs_genes <- colnames(object@phi_cellState@phi)
   			ct_genes <- colnames(object@phi_cellType@phi)
