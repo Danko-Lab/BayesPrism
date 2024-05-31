@@ -37,6 +37,9 @@ Chu, T. et al. & Danko, C.G.
 
 https://www.nature.com/articles/s43018-022-00356-3
 
+Contact me at: tc532@cornell.edu 
+
+
 * Independent Benchmarks:
 * Tran, K.A., Addala, V., Johnston, R.L. et al. Performance of tumour microenvironment deconvolution methods in breast cancer using single-cell simulated bulk mixtures. *Nat Commun* 14, 5758 (2023). https://doi.org/10.1038/s41467-023-41385-5
 * Hippen, A.A., Omran, D.K., Weber, L.M. et al. Performance of computational algorithms to deconvolve heterogeneous bulk ovarian tumor tissue depends on experimental factors. *Genome Biol* 24, 239 (2023). https://doi.org/10.1186/s13059-023-03077-7
