@@ -25,7 +25,8 @@ We provide a computational gateway to run BayesPrism on a HPC server.
 
 Please click the link to try this site:
 
-https://www.bayesprism.org/
+https://dreg.dnasequence.org 
+(bayesprism.org is currently under maintenance)
 
 
 2 Cite BayesPrism:
