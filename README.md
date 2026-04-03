@@ -7,6 +7,7 @@ BayesPrism consists of the deconvolution modules and the embedding learning modu
 
 
 ###  What's new?
+* Version v2.2.3 updates the genelist.hs (using GENCODE v44) and genelist.mm (using GENCODE vM33) files to reflect the more recent gene annotations. It also recognizes gene symbols even if they are fully capitalized or lowercased by the user.
 * The new version v2.2 supports the input of sparse matrix (dgCMatrix) for scRNA-seq reference.
 * The new version v2.1 improves the memory usage in snowfall by allocating only the necessary data to each node. 
 * The new version v2.0 improves the memory efficiency and run-time. The new version is written in S4 objects. 

@@ -15,6 +15,9 @@ assign.category <- function(input.genes,
 	if(species=="hs") gene.list <- read.table(system.file("extdata", "genelist.hs.new.txt", package="BayesPrism"),sep="\t",header=F,stringsAsFactors=F)
 	if(species=="mm") gene.list <- read.table(system.file("extdata", "genelist.mm.new.txt", package="BayesPrism"),sep="\t",header=F,stringsAsFactors=F)
 	
+	#convert everything to upper case and then compare (this is perfectly fine as there is no gene that differs by one upper/lower case in human and mouse genome)
+	gene.list[,3] <- toupper(gene.list[,3])
+	input.genes <- toupper(input.genes)
 	
 	#detect if EMSEMBLE ID (starts with ENS) or gene symbol is used
 	if( sum(substr(input.genes,1,3)=="ENS")> length(input.genes)*0.8  ){
